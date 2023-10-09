@@ -57,4 +57,35 @@ ggplot(data, aes(x=Words_Per_Minute, y=predicted_values)) +
   ylab("Predicted Words Per Minute") +
   theme_minimal()
 
+#Partial Regression Plots
+#This shows the relationship between each predictor variable and the response variable, after accounting for the other predictors.
+
+# Install and load necessary packages
+install.packages("car")
+library(car)
+
+# Plot partial regression plots
+avPlots(lm_model)
+
+# Diagnostic plots
+par(mfrow=c(2,2))  # Allows for 2x2 grid of plots
+plot(lm_model)
+
+
+#For 3D visualizations, when you have two predictor variables and one dependent variable, 
+#you can visualize the regression plane in a 3D space. This provides a graphical view of the relationships between the variables.
+
+#The rgl package in R provides functions to create interactive 3D plots:
+
+
+install.packages("rgl")
+library(rgl)
+
+# Create a 3D scatter plot
+with(data, plot3d(Temperature, Relative_Humidity, Words_Per_Minute, type="s", size=1, col="blue"))
+
+# Add regression plane
+coef_vals <- coef(lm_model)
+plane3d(model, mesh=TRUE, alpha=0.5)  # The regression plane
+
 
