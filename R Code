@@ -1,0 +1,36 @@
+# Install and load necessary packages
+install.packages("ggplot2")
+library(ggplot2)
+
+#Create a data frame
+data = data.frame(
+  Words_Per_Minute = c(52,56,69,58,61,65,51,63,63,67),
+  Temperature = c(74,77,69,73,72,71,76,73,74,72),
+  Relative_Humidity = c(51,45,42,45,45,47,41,48,44,45)
+)
+
+lm_model = lm(Words_Per_Minute ~ Temperature + Relative_Humidity, data = data)
+
+summary(lm_model)
+
+#Words Per Minute=b0 + b1×Temperature+ b2×Relative Humidity
+
+#Where b0 is the intercept
+#b1 is coefficient for Temperature
+#b2 is coefficient for Relative Humidity
+
+
+
+# Predict the values
+predicted_values <- predict(lm_model, data)
+
+# Plot the actual vs predicted values
+ggplot(data, aes(x=Words_Per_Minute, y=predicted_values)) +
+  geom_point() +
+  geom_smooth(method="lm", col="red") +
+  ggtitle("Actual vs. Predicted Words Per Minute") +
+  xlab("Actual Words Per Minute") +
+  ylab("Predicted Words Per Minute") +
+  theme_minimal()
+
+
